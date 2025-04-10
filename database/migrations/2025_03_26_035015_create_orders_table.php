@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->decimal('total_price');
+            $table->decimal('total_price', 10, 3);
             $table->enum('status', ['Chờ xử lý', 'Đã giao', 'Đang vận chuyển', 'Đã hủy']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -37,7 +37,7 @@
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->cateName }}</td>
-                        <td><img class="img-product" src="{{ asset($value->image) }}" alt=""></td>
+                        <td><img class="img-product" src="{{ asset(Storage::url($value->image)) }}" alt=""></td>
                         <td>{{ $value->brand }}</td>
                         <td>{{ $value->is_hot }}</td>
                         <td>

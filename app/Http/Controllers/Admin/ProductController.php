@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -35,13 +36,17 @@ class ProductController extends Controller
         // $product->save();
         //Cách 2
 
-        $linkImage = '';
+        $path = '';
         if ($req->hasFile('image')) {
             $image = $req->file('image');
-            $newName = time() . '.' . $image->getClientOriginalExtension();
-            $linkStorage = 'imageProducts/';
-            $image->move(public_path($linkStorage), $newName);
-            $linkImage =  $linkStorage . $newName;
+            // $newName = time() . '.' . $image->getClientOriginalExtension();
+            // $linkStorage = 'imageProducts/';
+            // $image->move(public_path($linkStorage), $newName);
+            // $linkImage =  $linkStorage . $newName;
+
+            $newName = time() . '' . $image->getClientOriginalName();
+
+            $path = $image->storeAs('images', $newName, 'public');
         }
         // dd($linkImage);
 
@@ -53,7 +58,7 @@ class ProductController extends Controller
             'price' => $req->price,
             'stock' => $req->stock,
             'is_hot' => $req->is_hot ? "1" : "0",
-            'image' => $linkImage,
+            'image' => $path,
         ];
         Product::create($data);
         return redirect()->route('admin.products.listProduct')->with([
@@ -64,11 +69,12 @@ class ProductController extends Controller
     {
         $product = Product::where('id', $req->idProduct)->first();
         if ($product->image != null && $req->image != '') {
-            File::delete(public_path($product->image));
+            // File::delete(public_path($product->image));
+
+            Storage::disk('public')->delete($product->image);
         }
 
         Product::where('id', $req->idProduct)->delete();
-
 
         // $product = Product::where('id', $req->idProduct);
         // if ($product->first()->image != null && $req->first()->image != '') {

@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'total_price' => $this->faker->randomFloat(2, 100, 1000),
+            'total_price' => $this->faker->randomFloat(3, 100, 1000),
             'status' => $this->faker->randomElement(['Chờ xử lý', 'Đã giao', 'Đang vận chuyển', 'Đã hủy']),
             'created_at' => $this->faker->dateTime,
             'updated_at' => $this->faker->dateTime,

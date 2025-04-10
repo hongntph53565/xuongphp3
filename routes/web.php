@@ -25,7 +25,6 @@ Route::post('post-register', [AuthController::class, 'postRegister'])->name('pos
 
 Route::get('home', [HomeController::class, 'home'])->name('home');
 Route::get('show/{idProduct}', [HomeController::class, 'show'])->name('show');
-Route::post('comment/store', [CommentController::class, 'store'])->name('store');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
 
 Route::group([

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('comments', function (Blueprint $table) {});
