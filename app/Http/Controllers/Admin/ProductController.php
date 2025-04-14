@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,7 @@ class ProductController extends Controller
         $categories = Category::select('id', 'name')->get();
         return view('admin.products.addProduct', compact('categories'));
     }
-    public function addPostProduct(Request $req)
+    public function addPostProduct(ProductRequest $req)
     {
         //Cách 1
         // $product = new Product();
@@ -96,18 +97,35 @@ class ProductController extends Controller
         $product = Product::where('id', $idProduct)->first();
         return view('admin.products.EditProduct', compact('product', 'categories'));
     }
-    public function updatePatchProduct($idProduct, Request $req)
+    public function updatePatchProduct($idProduct, ProductRequest  $req)
     {
+        // $product = Product::where('id', $idProduct)->first();
+        // $linkImage = $product->image;
+        // if ($req->hasFile('image')) {
+        //     File::delete(public_path($product->image)); //Xóa ảnh cũ
+        //     $image = $req->file('image');
+        //     $newName = time() . "." . $image->getClientOriginalExtension();
+        //     $linkStorage = "imageProduct/";
+        //     $image->move(public_path($linkStorage), $newName);
+        //     $linkImage =  $linkStorage . $newName;
+        // }
+
         $product = Product::where('id', $idProduct)->first();
         $linkImage = $product->image;
+
         if ($req->hasFile('image')) {
-            File::delete(public_path($product->image)); //Xóa ảnh cũ
+            // Xoá ảnh cũ (từ storage)
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+
             $image = $req->file('image');
-            $newName = time() . "." . $image->getClientOriginalExtension();
-            $linkStorage = "imageProduct/";
-            $image->move(public_path($linkStorage), $newName);
-            $linkImage =  $linkStorage . $newName;
+            $newName = time() . '.' . $image->getClientOriginalExtension();
+            $linkStorage = 'imageProduct/';
+            $path = $image->storeAs($linkStorage, $newName, 'public'); // Lưu vào storage/app/public/imageProduct/
+            $linkImage = $path; // Lưu tên đường dẫn để lưu vào DB
         }
+
         $data = [
             'category_id' => $req->category_id,
             'name' => $req->pro_name,

@@ -10,11 +10,17 @@
                 <label for="name" class="form-label">Tên người dùng:</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}"
                     placeholder="Nhập tên người dùng">
+                @error('name')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Email:</label>
                 <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}"
                     placeholder="Nhập Email">
+                @error('email')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
             {{-- <div class="mb-3">
                 <label for="name" class="form-label">Mật khẩu:</label>
@@ -27,6 +33,9 @@
                     <option value="0" {{ $user->role == 0 ? 'selected' : '' }}>Admin</option>
                     <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>User</option>
                 </select>
+                @error('role')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
             <button type="submit" class="btn btn-success">Cập nhật </button>
         </form>

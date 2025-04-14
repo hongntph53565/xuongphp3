@@ -4,8 +4,9 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ asset($product->image == '' ? 'images/default.png' : $product->image) }}" class="img-fluid"
-                    alt="{{ $product->name }}">
+                <img src="{{ asset(Storage::url($product->image)) }}" class="img-fluid" alt="{{ $product->name }}">
+                {{-- <img src="{{ asset($product->image == '' ? 'images/default.png' : $product->image) }}" class="img-fluid"
+                    alt="{{ $product->name }}"> --}}
             </div>
             <div class="col-md-6">
                 <h2 class="product-title">{{ $product->name }}</h2>
@@ -61,7 +62,7 @@
             @foreach ($productOfCategory as $value)
                 <div class="col-md-3 mb-4">
                     <div class="card">
-                        <img src="{{ asset($value->image == '' ? 'images/default.png' : $value->image) }}" class="img-fluid"
+                        <img src="{{ asset(Storage::url($value->image)) }}" class="img-fluid"
                             alt="{{ $value->name }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $value->name }}</h5>

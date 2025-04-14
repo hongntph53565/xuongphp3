@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
     {
         return view('admin.users.AddUser');
     }
-    public function addPostUser(Request $req)
+    public function addPostUser(UserRequest $req)
     {
         $data = [
             'name' => $req->name,
@@ -44,7 +45,7 @@ class UserController extends Controller
         $user = User::where('id', $idUser)->first();
         return view('admin.users.EditUser', compact('user'));
     }
-    public function updatePatchUser($idUser, Request $req)
+    public function updatePatchUser($idUser, UserRequest $req)
     {
         $data = [
             'name' => $req->name,

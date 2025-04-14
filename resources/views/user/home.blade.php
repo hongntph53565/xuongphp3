@@ -12,7 +12,7 @@
                 @foreach ($products as $value)
                     <div class="col-md-3 mb-4">
                         <div class="card h-100">
-                            <img src="{{ $value->image }}" class="card-img-top" alt="Sản phẩm 1">
+                            <img src="{{ asset(Storage::url($value->image)) }}" class="card-img-top" alt="Sản phẩm 1">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $value->name }}</h5>
                                 <h5 class="text-muted fs-6">{{ $value->name }}</h5>

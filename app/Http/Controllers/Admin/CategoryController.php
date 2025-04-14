@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -17,7 +18,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.AddCategories');
     }
-    public function addPostCategory(Request $req)
+    public function addPostCategory(CategoryRequest $req)
     {
         $data = [
             'name' => $req->cate_name,
@@ -40,13 +41,14 @@ class CategoryController extends Controller
         $categories = Category::where('id', $idCate)->first();
         return view('admin.categories.EditCategories', compact('categories'));
     }
-    public function updatePatchCategory($idCate, Request $req)
+    public function updatePatchCategory($idCate, CategoryRequest $req)
     {
+        $categories = Category::where('id', $idCate)->first();
         $data = [
             'name' => $req->cate_name,
             'description' => $req->description,
         ];
-        Category::where('id', $idCate)->update($data);
+        $categories->update($data);
         return redirect()->route('admin.categories.listCategory')->with([
             'message' => 'Sửa thành công'
         ]);

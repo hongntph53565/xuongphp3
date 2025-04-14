@@ -9,4 +9,12 @@ class OrderDetail extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'order_details';
+
+    public $fillable = [
+        'order_id',
+        'product_id',
+        'quantity',
+        'price',
+    ];
+
 }

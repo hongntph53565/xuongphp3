@@ -19,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'verify' => \App\Http\Middleware\VerifyCustomMiddleware::class,
             'verify-register' => \App\Http\Middleware\RegisterMiddleware::class,
             'verify-register2' => \App\Http\Middleware\Register2Middleware::class,
-            'checkAdmin' => CheckAdminMiddleware::class
+            'checkAdmin' => CheckAdminMiddleware::class,
+            'auth:sanctum' => \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
